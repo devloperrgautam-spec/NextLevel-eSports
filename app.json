@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "NextLevel eSports",
+    "slug": "nextlevel-esports",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.nextlevel.esports"
+    }
+  }
+}
