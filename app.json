@@ -7,6 +7,12 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "com.nextlevel.esports"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7758944"
+      }
     }
   }
 }
+
