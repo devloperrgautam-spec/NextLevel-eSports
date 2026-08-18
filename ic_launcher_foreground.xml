@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.65"
+        android:scaleY="0.65"
+        android:translateX="18.9"
+        android:translateY="18.9">
+        <!-- Outer Glowing Shield -->
+        <path
+            android:pathData="M54,12 L84,24 L84,52 C84,72 54,94 54,94 C54,94 24,72 24,52 L24,24 Z"
+            android:strokeWidth="3.5"
+            android:strokeColor="#FF00E676"
+            android:fillColor="#337C3AED" />
+
+        <!-- Inner Shield Gradient -->
+        <path
+            android:pathData="M54,18 L78,28 L78,50 C78,66 54,84 54,84 C54,84 30,66 30,50 L30,28 Z">
+            <aapt:attr name="android:fillColor">
+                <gradient
+                    android:startX="30"
+                    android:startY="18"
+                    android:endX="78"
+                    android:endY="84"
+                    android:type="linear">
+                    <item android:offset="0.0" android:color="#FF7C3AED"/>
+                    <item android:offset="1.0" android:color="#FF1E0B38"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+
+        <!-- Golden Esports Trophy / Wings -->
+        <!-- Trophy Cup -->
+        <path
+            android:pathData="M42,34 L66,34 L66,48 C66,56 60,60 54,60 C48,60 42,56 42,48 Z"
+            android:fillColor="#FFFACC15" />
+        <!-- Trophy Handles -->
+        <path
+            android:pathData="M42,38 C35,38 34,48 42,50 M66,38 C73,38 74,48 66,50"
+            android:strokeWidth="2.5"
+            android:strokeColor="#FFFACC15"
+            android:fillColor="#00000000" />
+        <!-- Trophy Stem & Base -->
+        <path
+            android:pathData="M51,60 L57,60 L57,68 L51,68 Z"
+            android:fillColor="#FFEAB308" />
+        <path
+            android:pathData="M44,68 L64,68 L67,73 L41,73 Z"
+            android:fillColor="#FFFACC15" />
+        <!-- Golden Star on Trophy -->
+        <path
+            android:pathData="M54,39 L55.5,43.5 L60.5,43.5 L56.5,46.5 L58,51 L54,48 L50,51 L51.5,46.5 L47.5,43.5 L52.5,43.5 Z"
+            android:fillColor="#FFFFFFFF" />
+        <!-- Neon Flames / Energy at top -->
+        <path
+            android:pathData="M54,23 L56,29 L54,27 L52,29 Z"
+            android:fillColor="#FF00E676" />
+    </group>
+</vector>
