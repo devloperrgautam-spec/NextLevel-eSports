@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextLevel eSports - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- AUTHENTICATION CONTAINER (Login / Register) -->
+    <div id="authContainer" class="auth-container">
+        <div class="auth-card">
+            <div class="esports-logo-badge" style="margin: 0 auto 15px auto;">
+                <span class="logo-icon">⚡</span>
+            </div>
+            <h2 id="authTitle" style="color: white; font-size: 20px; font-weight: 900; margin-bottom: 5px;">Welcome Back</h2>
+            <p id="authSubtitle" style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;">Login to your NextLevel eSports account</p>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="input-group" style="text-align: left;">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="e.g. gamer@gmail.com" required>
+                </div>
+                <div class="input-group" style="text-align: left; margin-bottom: 20px;">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="loginPass" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" style="background: var(--accent); color: #05080f; padding: 12px; font-weight: 800; margin-bottom: 12px;">Login Now</button>
+                <p style="font-size: 12px; color: var(--text-muted);">Don't have an account? <span id="switchToRegister" style="color: var(--accent); font-weight: bold; cursor: pointer;">Register here</span></p>
+            </form>
+
+            <!-- Register Form (Hidden by default) -->
+            <form id="registerForm" class="hidden">
+                <div class="input-group" style="text-align: left;">
+                    <label class="form-label">In-Game Name (IGN)</label>
+                    <input type="text" id="regName" class="form-input" placeholder="e.g. ProLegend" required>
+                </div>
+                <div class="input-group" style="text-align: left;">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="regEmail" class="form-input" placeholder="e.g. gamer@gmail.com" required>
+                </div>
+                <div class="input-group" style="text-align: left; margin-bottom: 20px;">
+                    <label class="form-label">Password (Min 6 chars)</label>
+                    <input type="password" id="regPass" class="form-input" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" style="background: var(--success); color: #05080f; padding: 12px; font-weight: 800; margin-bottom: 12px;">Create Account</button>
+                <p style="font-size: 12px; color: var(--text-muted);">Already have an account? <span id="switchToLogin" style="color: var(--accent); font-weight: bold; cursor: pointer;">Login here</span></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER (Hidden until logged in) -->
+    <div id="mainAppWrapper" class="hidden">
+        <!-- Top Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <div class="esports-logo-badge">
+                    <span class="logo-icon">⚡</span>
+                </div>
+                <div>
+                    <h1 class="app-title">NEXTLEVEL</h1>
+                    <span class="app-subtitle">ESPORTS</span>
+                </div>
+            </div>
+            <div class="header-wallet">
+                <span style="font-size: 14px;">🪙</span>
+                <span id="headerBalance" style="font-weight: 800; color: var(--accent);">0</span>
+            </div>
+        </header>
+
+        <!-- MAIN APP CONTAINER -->
+        <main class="app-container">
+
+            <!-- HOME TAB -->
+            <div id="homeTab" class="tab-content">
+                <!-- Auto Slider Banner -->
+                <div class="banner-slider-container">
+                    <div class="banner-slides-track" id="bannerSliderTrack">
+                        <div class="banner-slide">
+                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80" alt="Banner">
+                        </div>
+                    </div>
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+
+                <h3 style="color: var(--text-main); font-size: 16px; font-weight: 800; margin-bottom: 12px;">Upcoming tournaments</h3>
+
+                <div class="filter-container">
+                    <button class="filter-chip active-chip" onclick="filterTournaments('all', this)">All</button>
+                    <button class="filter-chip" onclick="toggleSubFilters('br', this)">Battle Royale</button>
+                    <button class="filter-chip" onclick="toggleSubFilters('cs', this)">Clash Squad</button>
+                </div>
+
+                <div id="brSubFilters" class="sub-filter-container" style="display: none;">
+                    <button class="sub-chip active-sub" onclick="filterTournaments('br-solo', this)">BR (Solo)</button>
+                    <button class="sub-chip" onclick="filterTournaments('br-squad', this)">BR (Squad)</button>
+                </div>
+
+                <div id="csSubFilters" class="sub-filter-container" style="display: none;">
+                    <button class="sub-chip active-sub" onclick="filterTournaments('cs-solo', this)">CS (Solo)</button>
+                    <button class="sub-chip" onclick="filterTournaments('cs-squad', this)">CS (Squad)</button>
+                </div>
+
+                <div id="tournamentList" style="margin-top: 15px;">
+                    <p style="text-align: center; color: var(--text-muted); padding: 20px;">Loading Tournaments...</p>
+                </div>
+            </div>
+
+            <!-- WALLET TAB -->
+            <div id="walletTab" class="tab-content hidden" style="padding: 20px; box-sizing: border-box;">
+                <h3 style="color: var(--accent); margin-bottom: 15px; font-size: 18px; font-weight: 800;">My Wallet</h3>
+                
+                <div class="wallet-balance-card">
+                    <div class="wallet-icon-glow">🪙</div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px;">Available Balance</div>
+                        <div class="wallet-balance-amount">🪙 0 <span style="font-size: 12px; color: var(--success); font-weight: normal;">(Verified)</span></div>
+                    </div>
+                </div>
+
+                <div class="wallet-action-row">
+                    <button class="wallet-btn-primary" onclick="openAddMoneyModal()">
+                        <span>➕</span> Add Coins
+                    </button>
+                    <button class="wallet-btn-secondary" onclick="openWithdrawModal()">
+                        <span>💸</span> Withdraw
+                    </button>
+                </div>
+
+                <div style="margin-top: 25px; margin-bottom: 12px;">
+                    <h4 style="font-size: 14px; font-weight: 700; color: var(--text-main); margin: 0;">Recent Transactions</h4>
+                </div>
+
+                <div class="wallet-tx-list">
+                    <p style="text-align: center; color: var(--text-muted); font-size: 12px; padding: 10px;">No recent transactions</p>
+                </div>
+            </div>
+
+            <!-- PROFILE TAB -->
+            <div id="profileTab" class="tab-content hidden" style="padding: 20px; box-sizing: border-box;">
+                <h3 style="color: var(--accent); margin-bottom: 15px; font-size: 18px; font-weight: 800;">My Profile</h3>
+                
+                <div class="profile-card">
+                    <div class="profile-avatar">🎮</div>
+                    <div class="profile-info">
+                        <div class="profile-name" id="displayProfileName">Pro Gamer</div>
+                        <div class="profile-status">FF UID: <span id="displayProfileUid" style="color: var(--accent);">Not Set</span></div>
+                    </div>
+                </div>
+
+                <div class="profile-stats-grid">
+                    <div class="p-stat-box">
+                        <div class="p-stat-val" style="color: var(--accent);">🪙 0</div>
+                        <div class="p-stat-label">Balance</div>
+                    </div>
+                    <div class="p-stat-box">
+                        <div class="p-stat-val" style="color: var(--success);" id="joinedCountStat">0</div>
+                        <div class="p-stat-label">Joined Matches</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+                    <button class="profile-action-btn" onclick="openProfileSettingsModal()">
+                        <span>⚙️</span> Edit Free Fire ID & Settings
+                    </button>
+                    <button class="profile-action-btn" onclick="openJoinedMatchesModal()">
+                        <span>⚔️</span> My Joined Matches History
+                    </button>
+                    <button class="profile-action-btn" onclick="openWalletHistoryModal()">
+                        <span>🪙</span> Wallet & Transaction Ledger
+                    </button>
+                    <button class="profile-action-btn" onclick="openReferralModal()">
+                        <span>🎁</span> Invite & Earn (Referral)
+                    </button>
+                    <button class="profile-action-btn" onclick="openTelegramSupport()">
+                        <span>💬</span> Help & Support (Contact Us)
+                    </button>
+                    <button id="openAdminModalBtn" class="profile-admin-btn">
+                        <span>🔐</span> Admin Panel Login
+                    </button>
+                    <button class="profile-logout-btn" onclick="logoutUser()">
+                        <span>🚪</span> Logout Account
+                    </button>
+                </div>
+            </div>
+
+            <!-- ADMIN DASHBOARD VIEW -->
+            <div id="adminView" class="tab-content hidden" style="padding: 20px; box-sizing: border-box;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="color: var(--accent); font-size: 18px; font-weight: 800;">Admin Panel</h3>
+                    <button id="closeAdminBtn" class="btn" style="width: auto; padding: 6px 12px; font-size: 12px; background: var(--danger); color: white;">Logout</button>
+                </div>
+
+                <!-- Registered Users List Section -->
+                <div style="background: #0b101d; border: 1px solid var(--card-border); padding: 15px; border-radius: 14px; margin-bottom: 15px;">
+                    <h4 style="color: white; font-size: 14px; margin-bottom: 10px;">Registered Users List</h4>
+                    <div id="adminRegisteredUsersList" style="max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px;">
+                        <p style="color: var(--text-muted); font-size: 12px;">Loading users...</p>
+                    </div>
+                </div>
+
+                <div style="background: #0b101d; border: 1px solid var(--card-border); padding: 15px; border-radius: 14px; margin-bottom: 15px;">
+                    <h4 style="color: white; font-size: 14px; margin-bottom: 10px;">Manage Banner Sliders (Direct URL)</h4>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <label class="form-label" style="font-size: 11px;">Paste Image Direct Link (.jpg / .png)</label>
+                        <input type="url" id="adminBannerUrlInput" class="form-input" placeholder="https://example.com/image.jpg" style="padding: 10px; font-size: 12px;">
+                    </div>
+                    <button class="btn" style="background: var(--accent); color: #05080f; padding: 10px; font-size: 12px; margin-bottom: 12px;" onclick="addBannerSliderUrl()">Add Banner to Slider</button>
+                    
+                    <h5 style="color: var(--text-muted); font-size: 11px; margin-bottom: 6px;">Active Sliders:</h5>
+                    <div style="display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto;" id="adminBannerListContainer"></div>
+                </div>
+
+                <div style="background: #0b101d; border: 1px solid var(--card-border); padding: 15px; border-radius: 14px; margin-bottom: 15px;">
+                    <h4 style="color: white; font-size: 14px; margin-bottom: 10px;">Create New Tournament</h4>
+                    <form id="tournamentForm">
+                        <div class="input-group"><label class="form-label">Tournament Title</label><input type="text" id="tTitle" class="form-input" placeholder="e.g. Free Fire Daily Battle" required></div>
+                        <div class="input-group"><label class="form-label">Game Type</label><select id="tType" class="form-input"><option value="Free Fire">Free Fire</option></select></div>
+                        <div class="input-group">
+                            <label class="form-label">Category / Mode</label>
+                            <select id="tCategory" class="form-input" onchange="handleCategoryChange()">
+                                <option value="br-solo">Battle Royale (Solo)</option>
+                                <option value="br-squad">Battle Royale (Squad)</option>
+                                <option value="cs-solo">Clash Squad (Solo)</option>
+                                <option value="cs-squad">Clash Squad (Squad)</option>
+                            </select>
+                        </div>
+                        <div class="input-group"><label class="form-label">Total Slots</label><input type="number" id="tSlots" class="form-input" placeholder="e.g. 48" required></div>
+                        <div class="input-group"><label class="form-label">Entry Fee (Coins)</label><input type="number" id="tFee" class="form-input" placeholder="e.g. 10" required></div>
+                        
+                        <div id="prizeInputsContainer"></div>
+
+                        <div class="input-group" id="perKillGroup"><label class="form-label">Per Kill Reward (Coins)</label><input type="number" id="tPerKill" class="form-input" placeholder="e.g. 5"></div>
+                        <div class="input-group"><label class="form-label">Schedule Time</label><input type="datetime-local" id="tSchedule" class="form-input" required></div>
+                        <div class="input-group"><label class="form-label">Map</label><input type="text" id="tMap" class="form-input" placeholder="e.g. Bermuda" required></div>
+                        
+                        <button type="submit" class="btn" style="background: var(--success); color: #05080f; padding: 12px; margin-top: 5px;">Publish Tournament</button>
+                    </form>
+                </div>
+
+                <div style="background: #0b101d; border: 1px solid var(--card-border); padding: 15px; border-radius: 14px;">
+                    <h4 style="color: white; font-size: 14px; margin-bottom: 10px;">Manage Tournaments & Requests</h4>
+                    <div id="adminTournamentList">
+                        <p style="color: var(--text-muted); font-size: 13px;">Loading list...</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- MODERN ADMIN LOGIN MODAL -->
+        <div id="adminLoginModal" class="modal-overlay hidden">
+            <div class="modern-modal-box">
+                <div class="modal-header-icon">🔐</div>
+                <h3>Admin Portal Login</h3>
+                <p class="modal-subtext">Enter your secure credentials to continue</p>
+                
+                <div class="input-group" style="text-align: left; margin-bottom: 12px;">
+                    <label class="form-label">Admin Email</label>
+                    <input type="email" id="adminLoginEmail" class="form-input" placeholder="admin@gmail.com">
+                </div>
+                <div class="input-group" style="text-align: left; margin-bottom: 20px;">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="adminLoginPass" class="form-input" placeholder="••••••••">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="modal-btn-cancel" onclick="closeAdminLoginModal()">Cancel</button>
+                    <button type="button" class="modal-btn-submit" onclick="submitAdminLogin()">Login Securely</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- UNIVERSAL CUSTOM ANIMATED POPUP MODAL -->
+        <div id="customModal" class="modal-overlay hidden">
+            <div class="modern-modal-box">
+                <div id="modalHeaderIcon" class="modal-header-icon">✨</div>
+                <h3 id="modalTitle" style="color: white; font-size: 18px; font-weight: 800; margin-bottom: 8px;">Modal Title</h3>
+                <div id="modalBody" style="margin-bottom: 20px; font-size: 13px; color: var(--text-muted);"></div>
+                <div id="modalActions" style="display: flex; gap: 10px;">
+                    <button type="button" id="modalCloseBtn" class="modal-btn-cancel">Cancel</button>
+                    <button type="button" id="modalSubmitBtn" class="modal-btn-submit" style="display: none;">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" data-tab="homeTab">
+                <span style="font-size: 20px;">🏠</span>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" data-tab="walletTab">
+                <span style="font-size: 20px;">🪙</span>
+                <span>Wallet</span>
+            </div>
+            <div class="nav-item" data-tab="profileTab">
+                <span style="font-size: 20px;">👤</span>
+                <span>Profile</span>
+            </div>
+        </nav>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
